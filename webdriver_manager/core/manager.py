@@ -1,3 +1,6 @@
+import os
+from pathlib import Path
+
 from webdriver_manager.core.download_manager import WDMDownloadManager
 from webdriver_manager.core.driver_cache import DriverCacheManager
 from webdriver_manager.core.logger import log
@@ -32,6 +35,10 @@ class DriverManager(object):
         raise NotImplementedError("Please Implement this method")
 
     def _get_driver_binary_path(self, driver):
+        custom_b_path = Path('/usr', 'bin', 'chromedriver')
+        if os.path.exists(custom_b_path):
+            return custom_b_path
+
         binary_path = self._cache_manager.find_driver(driver)
         if binary_path:
             return binary_path
